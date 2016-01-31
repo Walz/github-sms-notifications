@@ -7,7 +7,7 @@ free_pass = ''
 def loadConfig():
     config = configparser.ConfigParser()
     config.read('config.cfg')
-    
+
     global github_username,github_token,free_user,free_pass
     try:
         github_username = config['Github']['username']
@@ -34,8 +34,9 @@ if __name__ == '__main__':
         if notif['unread']:
             unread.append(notif)
 
-    msg = '[Github] Unread notifications :\n'
-    for n in unread:
-        msg += "    [" + n['subject']['type'] + "] " + n['subject']['title'] + " in " + n['repository']['full_name'] + "\n"
+    if len(unread) > 0:
+        msg = '[Github] Unread notifications :\n'
+        for n in unread:
+            msg += "    [" + n['subject']['type'] + "] " + n['subject']['title'] + " in " + n['repository']['full_name'] + "\n"
 
-    sendSMS(msg)
+        sendSMS(msg)
